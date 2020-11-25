@@ -32,6 +32,8 @@ namespace University.Models
         }
 
         public ICollection<CourseAssignment> CourseAssignments { get; set; }
+
+        //导航属性可以为 null，因为给定的讲师可能没有 OfficeAssignment
         public OfficeAssignment OfficeAssignment { get; set; }
     }
 }
