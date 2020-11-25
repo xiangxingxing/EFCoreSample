@@ -42,6 +42,7 @@ namespace University.Pages.Students
                 return NotFound();
             }
 
+            //使用TryUpdateModelAsync防止过度发布（修改了其他字段）
             if (await TryUpdateModelAsync(studentToUpdate, "student",
                 s => s.FirstMidName, s => s.LastName, s => s.EnrollmentDate))
             {

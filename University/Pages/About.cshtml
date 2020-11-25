@@ -7,29 +7,33 @@
 
 <h2>Student Body Statistics</h2>
 
-<table>
-    <thead>
-        <tr>
-            <th>
-                Enrollment Date
-            </th>
-            <th>
-                Students
-            </th>
-        </tr>
-    </thead>
+<div class="panel panel-default">
 
-    <tbody>
-        @foreach (var item in Model.Students)
-            {
+    <!-- Table -->
+    <table class="table">
+        <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EnrollmentDate)
-                    </td>
-                    <td>
-                        @item.StudentCount
-                    </td>
+                    <th>
+                        Enrollment Date
+                    </th>
+                    <th>
+                        Students
+                    </th>
                 </tr>
-            }
-    </tbody>
-</table>
+            </thead>
+        
+            <tbody>
+                @foreach (var item in Model.Students)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EnrollmentDate)
+                            </td>
+                            <td>
+                                @item.StudentCount
+                            </td>
+                        </tr>
+                    }
+            </tbody>
+    </table>
+</div>

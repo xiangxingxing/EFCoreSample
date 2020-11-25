@@ -40,10 +40,15 @@ namespace University.Pages.Students
             }
             CurrentFilter = currentFilter;
             
+            /*
+             * 区分
+             *    IQueryable: 对该对象上调用Contains，则使用数据库实现（推荐，处于性能考虑）
+             *    IEnumerable: 对该对象调用Contains，则使用.net core实现（不推荐，因为必须先从数据库服务器返回所有行）
+             */
             IQueryable<Student> studentsIQ = from s in _context.Students select s;
             if (!string.IsNullOrEmpty(searchString))
             {
-                studentsIQ = studentsIQ.Where(s => s.LastName.Contains(searchString)
+                studentsIQ = studentsIQ.Where(s => s.LastName.Contains(searchString) 
                                                    || s.FirstMidName.Contains(searchString));
             }
             
@@ -63,7 +68,7 @@ namespace University.Pages.Students
                     break;
             }
             
-            const int pageSize = 3;
+            const int pageSize = 3;//TODO: read form configuration
             Students = await PaginatedList<Student>.CreateAsync(
                 studentsIQ.AsNoTracking(), pageIndex ?? 1, pageSize);
         }
