@@ -8,8 +8,8 @@ namespace University.Data
     {
         public static void Initialize(SchoolContext context)
         {
-            var ensureCreated = context.Database.EnsureCreated();
-            Console.WriteLine($"ensureCreated = {ensureCreated}");
+            //var ensureCreated = context.Database.EnsureCreated();
+            //Console.WriteLine($"ensureCreated = {ensureCreated}");
 
             // Look for any students.
             if (context.Students.Any())
