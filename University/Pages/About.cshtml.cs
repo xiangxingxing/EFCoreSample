@@ -19,9 +19,12 @@ namespace University.Pages
         
         public IList<EnrollmentDateGroup> Students { get; set; }
         
-        public async Task OnGetAsync()
+        public string DateSort { get; set; }
+        
+        public async Task OnGetAsync(string sortOrder)
         {
-            IQueryable<EnrollmentDateGroup> data =
+            DateSort = sortOrder == "Date" ? "date_desc" : "Date";
+            IQueryable<EnrollmentDateGroup> dataIQuery =
                 from student in _context.Students
                 group student by student.EnrollmentDate
                 into dateGroup
@@ -31,7 +34,17 @@ namespace University.Pages
                     StudentCount = dateGroup.Count()
                 };
 
-            Students = await data.AsNoTracking().ToListAsync();
+            switch (sortOrder)
+            {
+                case "Date":
+                    dataIQuery = dataIQuery.OrderBy(d => d.EnrollmentDate);
+                    break;
+                case "date_desc":
+                    dataIQuery = dataIQuery.OrderByDescending(s => s.EnrollmentDate);
+                    break;
+            }
+
+            Students = await dataIQuery.AsNoTracking().ToListAsync();
         }
     }
 }
