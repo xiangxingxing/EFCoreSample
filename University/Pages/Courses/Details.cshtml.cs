@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using University.Data;
 using University.Models;
 
-namespace University.Pages.Students
+namespace University.Pages.Courses
 {
     public class DetailsModel : PageModel
     {
@@ -15,9 +15,10 @@ namespace University.Pages.Students
         {
             _context = context;
         }
-
-        public Student Student { get; set; }
         
+        public Course Course { get; set; }
+
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -25,13 +26,12 @@ namespace University.Pages.Students
                 return NotFound();
             }
 
-            //预先加载导航属性
-            Student = await _context.Students.Include(s => s.Enrollments)
-                .ThenInclude(e => e.Course)
+            Course = await _context.Courses
                 .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.ID == id);
-            
-            if (Student == null)
+                .Include(c => c.Department)
+                .FirstOrDefaultAsync(m => m.CourseID == id);
+
+            if (Course == null)
             {
                 return NotFound();
             }
